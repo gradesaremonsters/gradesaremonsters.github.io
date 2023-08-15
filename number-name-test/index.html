@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Number Name Game by Grades Are Monster</title>
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background-color: #f2f2f2;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 40px;
+      text-align: center;
+      background-color: #ffffff;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      font-size: 32px;
+      color: #6200EE;
+      margin-bottom: 20px;
+    }
+
+    #random-number {
+      font-size: 48px;
+      margin-bottom: 30px;
+      color: #333333;
+    }
+
+    button {
+      font-size: 18px;
+      background-color: #FFC107;
+      color: #333333;
+      border: none;
+      border-radius: 5px;
+      padding: 10px 20px;
+      margin-bottom: 20px;
+      cursor: pointer;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    label {
+      font-size: 18px;
+      color: #333333;
+    }
+
+    input[type="text"],
+    textarea {
+      width: 80px;
+      height: 30px;
+      font-size: 16px;
+      padding: 5px;
+      margin-top: 10px;
+      border: 1px solid #CCCCCC;
+      border-radius: 3px;
+    }
+
+    textarea {
+      height: 120px;
+      resize: none;
+    }
+
+    #result {
+      font-size: 20px;
+      font-weight: bold;
+      margin-top: 30px;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    #result.correct {
+      color: #32CD32;
+    }
+
+    #result.incorrect {
+      color: #FF0000;
+    }
+
+    .range-inputs {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .range-inputs label {
+      width: 40px;
+    }
+
+    .range-inputs input[type="text"] {
+      width: 60px;
+      margin-left: 10px;
+      margin-right: 10px;
+    }
+
+    .increment-decrement {
+      display: flex;
+      align-items: center;
+    }
+
+    .increment-decrement button {
+      margin: 0 5px;
+    }
+
+    .number-input-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .number-input-container label {
+      margin-bottom: 10px;
+    }
+
+    .number-input-container textarea {
+      width: 100%;
+      max-width: 400px;
+      height: 100px;
+      resize: vertical;
+      font-size: 24px; /* You can adjust this value to your preferred text size */
+      color: #FF0266;
+    }
+
+    .submit-button-container {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .submit-button-container button {
+      width: 200px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Number Name Game by Grades Are Monster</h1>
+
+    <div class="range-inputs">
+      <label for="min-range">From:</label>
+      <div class="increment-decrement">
+        <button onclick="decrement('min-range')">-</button>
+        <input type="text" id="min-range" value="40">
+        <button onclick="increment('min-range')">+</button>
+      </div>
+      <label for="max-range">To:</label>
+      <div class="increment-decrement">
+        <button onclick="decrement('max-range')">-</button>
+        <input type="text" id="max-range" value="120">
+        <button onclick="increment('max-range')">+</button>
+      </div>
+    </div>
+
+    <button onclick="generateRandomNumber()">Generate New Number</button>
+
+    <div id="random-number"></div>
+
+    <div class="number-input-container">
+      <label for="number-input">Guess the number name:</label>
+      <textarea id="number-input" rows="4"></textarea>
+    </div>
+
+    <div class="submit-button-container">
+      <button onclick="checkNumberName()">Submit</button>
+    </div>
+
+    <div id="result"></div>
+
+    <script>
+      var randomNumber = 0;
+      var minNumber = 40;
+      var maxNumber = 120;
+
+      function generateRandomNumber() {
+        minNumber = parseInt(document.getElementById("min-range").value);
+        maxNumber = parseInt(document.getElementById("max-range").value);
+
+        if (isNaN(minNumber) || isNaN(maxNumber) || minNumber >= maxNumber) {
+          alert("Please enter valid minimum and maximum numbers.");
+          return;
+        }
+
+        randomNumber = Math.floor(Math.random() * (maxNumber - minNumber + 1)) + minNumber;
+
+        document.getElementById("random-number").textContent = randomNumber;
+        document.getElementById("number-input").value = "";
+        document.getElementById("result").textContent = "";
+      }
+
+      function checkNumberName() {
+        var generatedNumberName = convertNumberToName(randomNumber);
+        var numberInput = document.getElementById("number-input").value;
+        var resultDiv = document.getElementById("result");
+
+        if (numberInput.toLowerCase() === generatedNumberName.toLowerCase()) {
+          resultDiv.textContent = "Correct! The answer is " + generatedNumberName + ".";
+          resultDiv.className = "correct";
+        } else {
+          resultDiv.textContent = "Sorry, your guess is incorrect. The correct number name is " + generatedNumberName + ".";
+          resultDiv.className = "incorrect";
+        }
+      }
+
+      function increment(elementId) {
+        var inputElement = document.getElementById(elementId);
+        var currentValue = parseInt(inputElement.value);
+        inputElement.value = currentValue + 1;
+      }
+
+      function decrement(elementId) {
+        var inputElement = document.getElementById(elementId);
+        var currentValue = parseInt(inputElement.value);
+        inputElement.value = currentValue - 1;
+      }
+
+      function convertNumberToName(number) {
+        var ones = [
+          "", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine",
+          "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"
+        ];
+
+        var tens = [
+          "", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"
+        ];
+
+        var scales = ["", "thousand", "million", "billion", "trillion", "quadrillion", "quintillion"];
+
+        if (number === "0") {
+          return "zero";
+        }
+
+        var numberParts = [];
+        var scaleIndex = 0;
+
+        while (number > 0) {
+          var threeDigits = number % 1000;
+
+          if (threeDigits !== 0) {
+            var digitGroup = [];
+
+            if (threeDigits >= 100) {
+              digitGroup.push(ones[Math.floor(threeDigits / 100)]);
+              digitGroup.push("hundred");
+              threeDigits %= 100;
+            }
+
+            if (threeDigits >= 20) {
+              digitGroup.push(tens[Math.floor(threeDigits / 10)]);
+              threeDigits %= 10;
+            }
+
+            if (threeDigits > 0) {
+              digitGroup.push(ones[threeDigits]);
+            }
+
+            var scale = scales[scaleIndex];
+            if (scale && digitGroup.length > 0) {
+              digitGroup.push(scale);
+            }
+
+            numberParts.unshift(digitGroup.join(" "));
+          }
+
+          number = Math.floor(number / 1000);
+          scaleIndex++;
+        }
+
+        return numberParts.join(" ");
+      }
+    </script>
+  </div>
+</body>
+</html>
