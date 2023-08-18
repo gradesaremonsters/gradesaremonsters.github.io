@@ -3,6 +3,8 @@
   <head>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap">
     <meta charset="UTF-8">
+      <title>Clock by Grades R Monsters (pause and drag minute hand)</title> <!-- Add the title here -->
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Draggable Analog Clock</title>
     <style>
@@ -15,6 +17,33 @@
         color: white;
         /* Text color */
       }
+
+    .clock-header {
+      text-align: center;
+      margin-bottom: 30px;
+            font-size: 5px;
+
+    }
+
+    .clock-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 12px;
+      font-weight: 700;
+      margin-top: 30px;
+      color: #FFD700;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Adjust the positioning of the clock container */
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: calc(100vh - 575px); /* Adjust the value to leave space for the header */
+      margin-top: 50px; /* Adjust the margin-top as needed */
+      margin-bottom: 50px; /* Adjust the margin-bottom as needed */
+    }
 
 .clock-number {
   position: absolute;
@@ -42,14 +71,6 @@
         transform: scale(1.1);
       }
 
-      .container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        height: 100vh;
-        margin-bottom: 100px;
-      }
 
       .clock {
         width: 200px;
@@ -155,29 +176,28 @@
         top: calc(110% + 30px);
       }
 
-      /* Clock labels styles */
-      .clock-label {
-        position: absolute;
-        font-size: 14px;
-        font-weight: bold;
-        font-family: Arial, sans-serif;
-        /* Use a simple font */
-        color: #FF6B6B;
-        transform-origin: center bottom;
-        z-index: 1;
-        text-align: center;
-      }
+/* Clock labels styles */
+.clock-label {
+  position: absolute;
+  font-size: 14px;
+  font-weight: bold;
+  font-family: Arial, sans-serif;
+  /* Use a simple font */
+  color: #FF6B6B;
+  background-color: transparent; /* Set the initial background color as transparent */
+  transform-origin: center bottom;
+  z-index: 1;
+  text-align: center;
+  transition: color 0.3s, background-color 0.3s; /* Add transitions for text color and background color */
+}
 
-      .clock-label:hover {
-        color: #FF1493;
-        /* Change to the desired hover color */
-      }
+.clock-label:hover {
+  color: #FF1493; /* Change to the desired hover text color */
+   background-color: #FF1493;
+}
 
-      /* Contrasting color for clock label background on hover */
-      .clock-label:hover {
-        background-color: #FFF;
-        /* Change to the desired background color */
-      }
+
+
 
       .oclock {
         top: -20px;
@@ -246,12 +266,27 @@
   cursor: grabbing !important;
 }
 
+.clock-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 20px;
+      color: #FFD700;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+
 
 
 
     </style>
   </head>
   <body>
+    <div class="clock-header">
+  <h4 class="clock-title" style="font-size: 10px;">Clock by Grades R Monsters 
+  (pause and drag minutes hand)</h4>
+</div>
     <div class="container">
       <div class="clock">
         <div class="clock-face">
@@ -392,11 +427,11 @@ for (let i = 0; i < numMinuteMarkers; i++) {
         if (minutes === 0) {
           oclockLabel.style.top = '-20px';
           oclockLabel.style.left = '50%';
-          oclockLabel.style.transform = 'translate(-50%, -50%)';
+          oclockLabel.style.transform = 'translate(-50%, -30%)';
         } else {
           oclockLabel.style.top = '-20px';
           oclockLabel.style.left = '50%';
-          oclockLabel.style.transform = 'translateX(-80%, -80%)';
+          oclockLabel.style.transform = 'translateX(-50%, -50%)';
         }
         // Change the color of the first quarter of the clock face when the minute hand is on 15
         const clockFaceElement = document.querySelector('.clock-face');
